@@ -12,8 +12,16 @@ public class EmployeeWageMain {
 
         if (attendance == 1) {
             System.out.println("Employee is Present");
+
+            // Use Case 2: Calculate Daily Wage
+            int wagePerHour = 20;
+            int fullDayHours = 8;
+            int dailyWage = wagePerHour * fullDayHours;
+
+            System.out.println("Employee Daily Wage: ₹" + dailyWage);
         } else {
             System.out.println("Employee is Absent");
+            System.out.println("Employee Daily Wage: ₹0");
         }  
 	}
 }
