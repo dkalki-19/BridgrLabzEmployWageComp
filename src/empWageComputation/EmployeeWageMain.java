@@ -1,5 +1,6 @@
 package empWageComputation;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -9,23 +10,21 @@ public class EmployeeWageMain implements IEmployeeWageComputation{
 	 public static final int IS_PART_TIME = 1;
 	    public static final int IS_FULL_TIME = 2;
 
-	    private CompanyEmpWage[] companyEmpWageArray;
-	    private int numOfCompanies = 0;
+	    private final ArrayList<CompanyEmpWage> companyList;
 
 	    public EmployeeWageMain() {
-	        companyEmpWageArray = new CompanyEmpWage[5];
+	        companyList = new ArrayList<>();
 	    }
 
 	    @Override
 	    public void addCompanyEmpWage(String company, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
-	        companyEmpWageArray[numOfCompanies++] = new CompanyEmpWage(company, wagePerHour, maxWorkingDays, maxWorkingHours);
+	        companyList.add(new CompanyEmpWage(company, wagePerHour, maxWorkingDays, maxWorkingHours));
 	    }
 
 	    @Override
 	    public void computeEmployeeWage() {
-	        for (int i = 0; i < numOfCompanies; i++) {
-	            CompanyEmpWage company = companyEmpWageArray[i];
-	            int totalWage = this.computeWage(company);
+	        for (CompanyEmpWage company : companyList) {
+	            int totalWage = computeWage(company);
 	            company.setTotalWage(totalWage);
 	            System.out.println(company);
 	        }
@@ -39,6 +38,7 @@ public class EmployeeWageMain implements IEmployeeWageComputation{
 
 	        while (totalDays < company.maxWorkingDays && totalHours < company.maxWorkingHours) {
 	            totalDays++;
+
 	            int empHours = 0;
 	            int empCheck = random.nextInt(3); // 0, 1, 2
 
