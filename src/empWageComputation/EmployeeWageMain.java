@@ -1,6 +1,9 @@
 package empWageComputation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -10,15 +13,19 @@ public class EmployeeWageMain implements IEmployeeWageComputation{
 	public static final int IS_PART_TIME = 1;
     public static final int IS_FULL_TIME = 2;
 
-    private final ArrayList<CompanyEmpWage> companyList;
+    private final List<CompanyEmpWage> companyList;
+    private final Map<String, CompanyEmpWage> companyToEmpWageMap;
 
     public EmployeeWageMain() {
         companyList = new ArrayList<>();
+        companyToEmpWageMap = new HashMap<>();
     }
 
     @Override
     public void addCompanyEmpWage(String company, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
-        companyList.add(new CompanyEmpWage(company, wagePerHour, maxWorkingDays, maxWorkingHours));
+        CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, wagePerHour, maxWorkingDays, maxWorkingHours);
+        companyList.add(companyEmpWage);
+        companyToEmpWageMap.put(company, companyEmpWage);
     }
 
     @Override
@@ -65,6 +72,16 @@ public class EmployeeWageMain implements IEmployeeWageComputation{
         return totalWage;
     }
 
+    @Override
+    public int getTotalWage(String company) {
+        if (companyToEmpWageMap.containsKey(company)) {
+            return companyToEmpWageMap.get(company).totalWage;
+        } else {
+            System.out.println("Company not found!");
+            return -1;
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program on Master Branch\n");
 
@@ -74,6 +91,10 @@ public class EmployeeWageMain implements IEmployeeWageComputation{
         empWageBuilder.addCompanyEmpWage("Wipro", 18, 24, 90);
 
         empWageBuilder.computeEmployeeWage();
+
+        // UC14: Query total wage by company
+        System.out.println("Queried Wage for Infosys: ₹" + empWageBuilder.getTotalWage("Infosys"));
+        System.out.println("Queried Wage for Wipro: ₹" + empWageBuilder.getTotalWage("Wipro"));
     }
 
 }
