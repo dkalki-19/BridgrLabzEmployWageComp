@@ -4,20 +4,18 @@ import java.util.Random;
 
 public class EmployeeWageMain {
 
-	public static final int IS_PART_TIME = 1;
+    // Constants
+    public static final int IS_PART_TIME = 1;
     public static final int IS_FULL_TIME = 2;
-    public static final int WAGE_PER_HOUR = 20;
-    public static final int MAX_WORKING_DAYS = 20;
-    public static final int MAX_WORKING_HOURS = 100;
 
-    public static void computeEmployeeWage() {
+    // Method with parameters
+    public static void computeEmployeeWage(String company, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
         int totalWorkingDays = 0;
         int totalEmpHours = 0;
         int totalWage = 0;
-
         Random random = new Random();
 
-        while (totalWorkingDays < MAX_WORKING_DAYS && totalEmpHours < MAX_WORKING_HOURS) {
+        while (totalWorkingDays < maxWorkingDays && totalEmpHours < maxWorkingHours) {
             totalWorkingDays++;
 
             int empHours = 0;
@@ -35,26 +33,30 @@ public class EmployeeWageMain {
             }
 
             // Ensure not exceeding max hours
-            if (totalEmpHours + empHours > MAX_WORKING_HOURS) {
-                empHours = MAX_WORKING_HOURS - totalEmpHours;
+            if (totalEmpHours + empHours > maxWorkingHours) {
+                empHours = maxWorkingHours - totalEmpHours;
             }
 
             totalEmpHours += empHours;
-            int dailyWage = empHours * WAGE_PER_HOUR;
+            int dailyWage = empHours * wagePerHour;
             totalWage += dailyWage;
 
-            System.out.println("Day " + totalWorkingDays + ": Hours = " + empHours + ", Daily Wage = ₹" + dailyWage);
+            System.out.println(company + " - Day " + totalWorkingDays + ": Hours = " + empHours + ", Daily Wage = ₹" + dailyWage);
         }
 
-        System.out.println("\nTotal Working Days: " + totalWorkingDays);
-        System.out.println("Total Hours Worked: " + totalEmpHours);
-        System.out.println("Total Monthly Wage: ₹" + totalWage);
+        System.out.println(company + " - Total Working Days: " + totalWorkingDays);
+        System.out.println(company + " - Total Hours Worked: " + totalEmpHours);
+        System.out.println(company + " - Total Monthly Wage: ₹" + totalWage);
+        System.out.println("---------------------------------------------------------");
     }
 
     public static void main(String[] args) {
-    	
-        System.out.println("Welcome to Employee Wage Computation Program on Master Branch");
-        computeEmployeeWage();
+        System.out.println("Welcome to Employee Wage Computation Program on Master Branch\n");
+
+        // UC8: Compute for multiple companies
+        computeEmployeeWage("TCS", 20, 20, 100);
+        computeEmployeeWage("Infosys", 25, 22, 120);
+        computeEmployeeWage("Wipro", 18, 24, 90);
     }
 }
 
